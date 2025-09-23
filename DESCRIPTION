@@ -1,0 +1,10 @@
+Package: pipelinetools
+Title: Functions used in setting up targets pipelines.
+Version: 1.0.0
+Authors@R: 
+    person("Ross", "Wilson", , "ross.wilson@otago.ac.nz", role = c("aut", "cre"))
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
