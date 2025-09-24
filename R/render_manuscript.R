@@ -12,9 +12,9 @@
 #' @export
 render_manuscript <- function(
   path,
-  deps,
-  fig,
-  tbl,
+  deps = list(),
+  fig = list(),
+  tbl = list(),
   template = "reports/_templates/article.typ",
   bibliography = "reports/references.yaml"
 ) {
