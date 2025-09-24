@@ -18,16 +18,23 @@ render_manuscript <- function(
   template = "reports/_templates/article.typ",
   bibliography = "reports/references.yaml"
 ) {
-  # Extract preferred image format
-  fig <- purrr::modify_tree(fig, leaf = extract_image)
+  if (length(fig)) {
+    # Extract preferred image format
+    fig <- purrr::modify_tree(fig, leaf = extract_image)
 
-  # Redefine relative paths for tables and figures
-  fig <- purrr::modify_depth(fig, -1, \(x) fs::path_rel(x, "output"))
-  tbl <- purrr::modify_depth(tbl, -1, \(x) fs::path_rel(x, "output"))
+    # Redefine relative paths
+    fig <- purrr::modify_depth(fig, -1, \(x) fs::path_rel(x, "output"))
 
-  # Write table and figure sources to JSON for Typst
-  jsonlite::write_json(fig, fs::path("output", "fig.json"), auto_unbox = TRUE)
-  jsonlite::write_json(tbl, fs::path("output", "tbl.json"), auto_unbox = TRUE)
+    # Write figure sources to JSON for Typst
+    jsonlite::write_json(fig, fs::path("output", "fig.json"), auto_unbox = TRUE)
+  }
+  if (length(tbl)) {
+    # Redefine relative paths
+    tbl <- purrr::modify_depth(tbl, -1, \(x) fs::path_rel(x, "output"))
+
+    # Write table sources to JSON for Typst
+    jsonlite::write_json(tbl, fs::path("output", "tbl.json"), auto_unbox = TRUE)
+  }
 
   # Temporarily copy Typst source to output directory
   newpath <- fs::path("output", fs::path_rel(path, "reports"))
