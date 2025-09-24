@@ -26,14 +26,20 @@ render_manuscript <- function(
     fig <- purrr::modify_depth(fig, -1, \(x) fs::path_rel(x, "output"))
 
     # Write figure sources to JSON for Typst
-    jsonlite::write_json(fig, fs::path("output", "fig.json"), auto_unbox = TRUE)
+    fig_json <- fs::path("output", "fig.json")
+    jsonlite::write_json(fig, fig_json, auto_unbox = TRUE)
+  } else {
+    fig_json <- character(0)
   }
   if (length(tbl)) {
     # Redefine relative paths
     tbl <- purrr::modify_depth(tbl, -1, \(x) fs::path_rel(x, "output"))
 
     # Write table sources to JSON for Typst
-    jsonlite::write_json(tbl, fs::path("output", "tbl.json"), auto_unbox = TRUE)
+    tbl_json <- fs::path("output", "tbl.json")
+    jsonlite::write_json(tbl, tbl_json, auto_unbox = TRUE)
+  } else {
+    tbl_json <- character(0)
   }
 
   # Temporarily copy Typst source to output directory
@@ -68,8 +74,14 @@ render_manuscript <- function(
   stderr <- system2("typst", c("compile", shQuote(newpath)), stderr = TRUE)
 
   # Remove temporary files in output directory
-  fs::file_delete(fs::path_ext_set(fs::path("output", c("fig", "tbl")), "json"))
-  fs::file_delete(c(newpath, newtemplate, newdeps, newbibliography))
+  fs::file_delete(c(
+    newpath,
+    newtemplate,
+    newdeps,
+    newbibliography,
+    fig_json,
+    tbl_json
+  ))
   fs::dir_delete(fs::path_dir(newtemplate))
 
   # Pass on any errors or warnings from the Typst compiler
