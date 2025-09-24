@@ -10,9 +10,14 @@
 #' @param bibliography Bibliography file
 #'
 #' @export
-render_manuscript <- function(path, deps, fig, tbl,
-                              template = "reports/_templates/article.typ",
-                              bibliography = "reports/references.yaml") {
+render_manuscript <- function(
+  path,
+  deps,
+  fig,
+  tbl,
+  template = "reports/_templates/article.typ",
+  bibliography = "reports/references.yaml"
+) {
   # Extract preferred image format
   fig <- purrr::modify_tree(fig, leaf = extract_image)
 
@@ -61,10 +66,19 @@ render_manuscript <- function(path, deps, fig, tbl,
   fs::dir_delete(fs::path_dir(newtemplate))
 
   # Pass on any errors or warnings from the Typst compiler
-  if (any(vapply(stderr, \(x) stringr::str_detect(x, "^error\\:"), logical(1)))) {
-    stop("Error compiling Typst source at ", path, "\n", paste(stderr, collapse = "\n"))
+  if (
+    any(vapply(stderr, \(x) stringr::str_detect(x, "^error\\:"), logical(1)))
+  ) {
+    stop(
+      "Error compiling Typst source at ",
+      path,
+      "\n",
+      paste(stderr, collapse = "\n")
+    )
   }
-  if (any(vapply(stderr, \(x) stringr::str_detect(x, "^warning\\:"), logical(1)))) {
+  if (
+    any(vapply(stderr, \(x) stringr::str_detect(x, "^warning\\:"), logical(1)))
+  ) {
     warning("Warning from the Typst compiler\n", paste(stderr, collapse = "\n"))
   }
 
@@ -73,6 +87,17 @@ render_manuscript <- function(path, deps, fig, tbl,
 }
 
 extract_image <- function(x) {
-  x <- as.list(x)
-  x$svg %||% x$png %||% x$jpg %||% x$jpeg %||% x$gif
+  get_image_path(x, "svg") %||%
+    get_image_path(x, "png") %||%
+    get_image_path(x, "jpe?g") %||%
+    get_image_path(x, "gif")
+}
+
+get_image_path <- function(x, ext) {
+  pattern <- paste0("\\.", ext, "$")
+  if (length(grepv(pattern, x, ignore.case = TRUE))) {
+    grepv(pattern, x, ignore.case = TRUE)[[1]]
+  } else {
+    NULL
+  }
 }
