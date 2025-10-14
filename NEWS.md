@@ -4,6 +4,8 @@
 
 * Allow zero-length `fig` and `tbl` arguments in `render_manuscript()`
 
+* Use `svglite::svglite()` and `ragg::agg_png()` devices with `save_plot()`, if available
+
 # pipelinetools v1.0.0
 
 * Initial version of `pipelinetools`, adapted from `uo-cmor/CMORprojects`

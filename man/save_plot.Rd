@@ -15,7 +15,6 @@ save_plot(
   ...,
   pdf = TRUE,
   png = TRUE,
-  family = "Wickliffe Sans",
   create_dir = TRUE
 )
 }
@@ -38,8 +37,6 @@ alternatively specify \code{"cm"}, \verb{"mm}", or \code{"px"}).}
 \item{pdf}{Whether to produce PDF output (as well as SVG).}
 
 \item{png}{Whether to produce PNG output (as well as SVG).}
-
-\item{family}{Font family, passed through to \code{ggplot2::ggsave()}.}
 
 \item{create_dir}{Whether to create the output directory if it doesn't exist.}
 }
