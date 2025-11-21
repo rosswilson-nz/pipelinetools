@@ -1,7 +1,7 @@
 targets::tar_test("tar_table() works", {
   y <- 1
   x <- tar_table(x, y, "a")
-  expect_equal(x$name, "x")
+  expect_equal(x$name, "tbl_x")
   expect_equal(
     x$command$string,
     "expression(save_table(y, \"a\"))"

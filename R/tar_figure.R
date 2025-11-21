@@ -136,6 +136,7 @@ tar_figure <- function(
   targets::tar_assert_chr(name)
   targets::tar_assert_nzchar(name)
   targets::tar_assert_lgl(tidy_eval)
+  name <- paste0("fig_", name)
 
   envir <- targets::tar_option_get("envir")
   filename <- as.expression(substitute(filename))

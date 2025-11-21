@@ -1,7 +1,7 @@
 targets::tar_test("tar_figure() works", {
   y <- 1
   x <- tar_figure(x, y, "a", height = 4, width = 6)
-  expect_equal(x$name, "x")
+  expect_equal(x$name, "fig_x")
   expect_equal(
     x$command$string,
     "expression(save_plot(y, \"a\", height = 4, width = 6))"
