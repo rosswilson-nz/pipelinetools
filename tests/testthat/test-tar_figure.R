@@ -15,7 +15,7 @@ targets::tar_test("tar_figure() description", {
   expect_equal(x$settings$description, "info")
 })
 
-targets::tar_test("tar_figure() defines pattens correctly", {
+targets::tar_test("tar_figure() defines patterns correctly", {
   y <- 1
   x <- tar_figure(x, y, "a", pattern = map(y))
   expect_equal(x$settings$pattern, expression(map(y)))
