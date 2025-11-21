@@ -1,6 +1,6 @@
 Package: pipelinetools
 Title: Functions used in setting up targets pipelines
-Version: 1.0.1
+Version: 1.0.1.9000
 Authors@R: 
     person("Ross", "Wilson", , "ross.wilson@otago.ac.nz", role = c("aut", "cre"))
 Description: pipelinetools provides functions to be used in setting up `targets`

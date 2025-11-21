@@ -1,3 +1,7 @@
+# pipelinetools v1.1.0
+
+* Add `tar_figure()` target factory
+
 # pipelinetools v1.0.1
 
 * Correct handling of unnamed filepath vectors in `extract_image()`
