@@ -36,6 +36,14 @@ targets::tar_test("tidy eval works", {
   expect_equal(x$command$string, "expression(save_plot(1, \"a\"))")
 })
 
+targets::tar_test("tidy eval works", {
+  envir <- environment()
+  targets::tar_option_set(envir = envir)
+  envir$y <- "a"
+  x <- tar_figure(x, y, !!y)
+  expect_equal(x$command$string, "expression(save_plot(y, \"a\"))")
+})
+
 targets::tar_test("can disable tidy eval", {
   y <- 1
   x <- tar_figure(x, !!y, "a", tidy_eval = FALSE)

@@ -136,11 +136,22 @@ tar_figure <- function(
   targets::tar_assert_chr(name)
   targets::tar_assert_nzchar(name)
   targets::tar_assert_lgl(tidy_eval)
-  targets::tar_assert_nonmissing(filename)
+
+  envir <- targets::tar_option_get("envir")
+  filename <- as.expression(substitute(filename))
+  targets::tar_assert_nonmissing(
+    filename[[1]],
+    paste("target", name, "has no filename.")
+  )
+  filename <- targets::tar_tidy_eval(filename, envir, tidy_eval)
+  filename <- as.character(filename)
   targets::tar_assert_chr(filename)
   targets::tar_assert_nzchar(filename)
-  targets::tar_assert_nonmissing(command)
-  envir <- targets::tar_option_get("envir")
+
+  targets::tar_assert_nonmissing(
+    command,
+    paste("target", name, "has no command.")
+  )
   command <- as.expression(substitute(save_plot(command, filename, ...)))
   targets::tar_assert_nonmissing(
     command[[1]],
