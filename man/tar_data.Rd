@@ -159,9 +159,9 @@ storage format (data file), one with standard target format (a
 tibble/data frame).
 }
 \description{
-Target factory for figure image file targets. Takes a \code{ggplot2} plot (or a
-command to generate such a plot) and a filename stub, and saves the plot
-in SVG, PNG, and PDF formats, returning a file target.
+Target factory for data import targets. Creates a pair of targets prefixed
+\code{file_} and \code{raw_} for the data file and imported data objects,
+respectively.
 }
 \details{
 See \code{\link[targets:tar_target]{targets::tar_target()}} for details of all arguments other than

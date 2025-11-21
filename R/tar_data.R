@@ -1,8 +1,8 @@
 #' Figure image file output target
 #'
-#' Target factory for figure image file targets. Takes a `ggplot2` plot (or a
-#'     command to generate such a plot) and a filename stub, and saves the plot
-#'     in SVG, PNG, and PDF formats, returning a file target.
+#' Target factory for data import targets. Creates a pair of targets prefixed
+#'     `file_` and `raw_` for the data file and imported data objects,
+#'     respectively.
 #'
 #' See [targets::tar_target()] for details of all arguments other than
 #'     `filename` and those passed through `...`.
