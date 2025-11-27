@@ -141,10 +141,11 @@ tar_data <- function(
   targets::tar_assert_lgl(tidy_eval)
 
   envir <- targets::tar_option_get("envir")
+
   filename <- as.expression(substitute(filename))
   targets::tar_assert_nonmissing(
     filename[[1]],
-    paste("target", name_base, "has no filename.")
+    stringr::str_glue("target {name_base} has no filename.")
   )
   filename <- targets::tar_tidy_eval(filename, envir, TRUE)
   filename <- eval(filename)
@@ -156,11 +157,14 @@ tar_data <- function(
   pattern <- targets::tar_tidy_eval(pattern, envir, tidy_eval)
   garbage_collection <- isTRUE(garbage_collection)
 
-  name_file <- paste0("file_", name_base)
-  name_raw <- paste0("raw_", name_base)
+  name_file <- stringr::str_glue("file_{name_base}")
+  name_raw <- stringr::str_glue("raw_{name_base}")
   file <- as.symbol(name_file)
 
-  targets::tar_assert_nonmissing(fn, paste("target", name_base, "has no `fn`."))
+  targets::tar_assert_nonmissing(
+    fn,
+    stringr::str_glue("target {name_base} has no `fn`.")
+  )
   fn <- substitute(fn)
 
   command <- as.expression(substitute(fn(file, ...)))

@@ -17,7 +17,7 @@ save_table <- function(
   create_dir = TRUE
 ) {
   fs::dir_create("output", "_tables/")
-  path <- paste0("output/_tables/", filename, ".typ")
+  path <- fs::path("output", "_tables", filename, ext = "typ")
   writeLines(table, path)
   path
 }

@@ -51,7 +51,7 @@ targets::tar_test("no filename", {
 })
 
 targets::tar_test("filename expression", {
-  x <- tar_data(mydata, paste0("mydata", "-1.csv"), read.csv)
+  x <- tar_data(mydata, stringr::str_glue("mydata", "-1.csv"), read.csv)
   expect_equal(x[[1]]$command$string, "expression(\"raw_data/mydata-1.csv\")")
 })
 

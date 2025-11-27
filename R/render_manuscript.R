@@ -92,13 +92,16 @@ render_manuscript <- function(
       "Error compiling Typst source at ",
       path,
       "\n",
-      paste(stderr, collapse = "\n")
+      stringr::str_c(stderr, collapse = "\n")
     )
   }
   if (
     any(vapply(stderr, \(x) stringr::str_detect(x, "^warning\\:"), logical(1)))
   ) {
-    warning("Warning from the Typst compiler\n", paste(stderr, collapse = "\n"))
+    warning(
+      "Warning from the Typst compiler\n",
+      stringr::str_c(stderr, collapse = "\n")
+    )
   }
 
   # Path to file dependencies (output, input, template)
@@ -113,7 +116,7 @@ extract_image <- function(x) {
 }
 
 get_image_path <- function(x, ext) {
-  pattern <- paste0("\\.", ext, "$")
+  pattern <- stringr::str_glue("\\.{ext}$")
   if (length(grepv(pattern, x, ignore.case = TRUE))) {
     grepv(pattern, x, ignore.case = TRUE)[[1]]
   } else {
