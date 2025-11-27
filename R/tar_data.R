@@ -150,6 +150,7 @@ tar_data <- function(
   filename <- as.character(filename)
   targets::tar_assert_chr(filename)
   targets::tar_assert_nzchar(filename)
+  filename <- fs::path("raw_data", filename)
 
   pattern <- as.expression(substitute(pattern))
   pattern <- targets::tar_tidy_eval(pattern, envir, tidy_eval)
@@ -159,15 +160,10 @@ tar_data <- function(
   name_raw <- paste0("raw_", name_base)
   file <- as.symbol(name_file)
 
-  targets::tar_assert_nonmissing(fn)
+  targets::tar_assert_nonmissing(fn, paste("target", name_base, "has no `fn`."))
   fn <- substitute(fn)
-  filename <- fs::path("raw_data", filename)
 
   command <- as.expression(substitute(fn(file, ...)))
-  targets::tar_assert_nonmissing(
-    command[[1]],
-    paste("target", name_base, "has no `fn`.")
-  )
   command <- targets::tar_tidy_eval(command, envir, tidy_eval)
   list(
     targets::tar_target_raw(

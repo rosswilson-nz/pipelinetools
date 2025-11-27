@@ -1,6 +1,6 @@
 # pipelinetools v1.1.0
 
-* Add `tar_figure()` target factory
+* Add `tar_figure()`, `tar_table()`, and `tar_data()` target factories
 
 # pipelinetools v1.0.1
 

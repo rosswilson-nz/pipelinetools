@@ -149,16 +149,17 @@ tar_figure <- function(
   targets::tar_assert_chr(filename)
   targets::tar_assert_nzchar(filename)
 
-  targets::tar_assert_nonmissing(
-    command,
-    paste("target", name, "has no command.")
-  )
-  command <- as.expression(substitute(save_plot(command, filename, ...)))
+  command <- as.expression(substitute(command))
   targets::tar_assert_nonmissing(
     command[[1]],
     paste("target", name, "has no command.")
   )
   command <- targets::tar_tidy_eval(command, envir, tidy_eval)
+  command <- targets::tar_tidy_eval(
+    as.expression(substitute(save_plot(command, filename, ...))),
+    envir,
+    tidy_eval
+  )
   pattern <- as.expression(substitute(pattern))
   pattern <- targets::tar_tidy_eval(pattern, envir, tidy_eval)
   garbage_collection <- isTRUE(garbage_collection)

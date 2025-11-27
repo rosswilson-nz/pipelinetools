@@ -47,7 +47,10 @@ targets::tar_test("tidy eval works", {
 targets::tar_test("can disable tidy eval", {
   y <- 1
   x <- tar_figure(x, !!y, "a", tidy_eval = FALSE)
-  expect_equal(x$command$string, "expression(save_plot(!!y, \"a\"))")
+  expect_equal(
+    x$command$string,
+    "expression(save_plot(expression(!!y), \"a\"))"
+  )
 })
 
 targets::tar_test("no name", {

@@ -1,5 +1,4 @@
 targets::tar_test("tar_table() works", {
-  y <- 1
   x <- tar_table(x, y, "a")
   expect_equal(x$name, "tbl_x")
   expect_equal(
@@ -10,20 +9,17 @@ targets::tar_test("tar_table() works", {
 })
 
 targets::tar_test("tar_table() description", {
-  y <- 1
   x <- tar_table(x, y, "a", description = "info")
   expect_equal(x$settings$description, "info")
 })
 
 targets::tar_test("tar_table() defines patterns correctly", {
-  y <- 1
   x <- tar_table(x, y, "a", pattern = map(y))
   expect_equal(x$settings$pattern, expression(map(y)))
   expect_equal(x$settings$dimensions, "y")
 })
 
 targets::tar_test("tar_table() sets deployment = 'main' by default", {
-  y <- 1
   x <- tar_table(x, y, "a")
   expect_equal(x$settings$deployment, "main")
 })
@@ -45,13 +41,14 @@ targets::tar_test("tidy eval works", {
 })
 
 targets::tar_test("can disable tidy eval", {
-  y <- 1
   x <- tar_table(x, !!y, "a", tidy_eval = FALSE)
-  expect_equal(x$command$string, "expression(save_table(!!y, \"a\"))")
+  expect_equal(
+    x$command$string,
+    "expression(save_table(expression(!!y), \"a\"))"
+  )
 })
 
 targets::tar_test("no name", {
-  y <- 1
   expect_error(
     tar_table(command = y, filename = "a"),
     class = "tar_condition_validate"
@@ -66,7 +63,6 @@ targets::tar_test("no command", {
 })
 
 targets::tar_test("no filename", {
-  y <- 1
   expect_error(
     tar_table(x, y),
     class = "tar_condition_validate"
@@ -74,7 +70,6 @@ targets::tar_test("no filename", {
 })
 
 targets::tar_test("declaring a target does not run its command", {
-  y <- 1
   x <- tar_table(x, y, "a")
   path <- fs::path("output", "_tables", "x")
   expect_false(file.exists(fs::path(path, ext = "typ")))
