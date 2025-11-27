@@ -134,13 +134,13 @@ tar_data <- function(
   cue = targets::tar_option_get("cue"),
   description = targets::tar_option_get("description")
 ) {
+  envir <- targets::tar_option_get("envir")
+
   name_base <- targets::tar_deparse_language(substitute(name))
   targets::tar_assert_chr(name_base)
   targets::tar_assert_nzchar(name_base)
 
   targets::tar_assert_lgl(tidy_eval)
-
-  envir <- targets::tar_option_get("envir")
 
   filename <- as.expression(substitute(filename))
   targets::tar_assert_nonmissing(

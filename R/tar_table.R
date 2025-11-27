@@ -130,13 +130,13 @@ tar_table <- function(
   cue = targets::tar_option_get("cue"),
   description = targets::tar_option_get("description")
 ) {
+  envir <- targets::tar_option_get("envir")
+
   name <- targets::tar_deparse_language(substitute(name))
   targets::tar_assert_chr(name)
   targets::tar_assert_nzchar(name)
   targets::tar_assert_lgl(tidy_eval)
   name <- stringr::str_glue("tbl_{name}")
-
-  envir <- targets::tar_option_get("envir")
 
   filename <- as.expression(substitute(filename))
   targets::tar_assert_nonmissing(

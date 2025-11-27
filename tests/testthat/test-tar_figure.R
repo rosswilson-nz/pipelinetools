@@ -70,7 +70,8 @@ targets::tar_test("no filename", {
 })
 
 targets::tar_test("filename expression", {
-  x <- tar_figure(x, y, stringr::str_glue("a", "-b"), height = 4, width = 6)
+  z <- "b"
+  x <- tar_figure(x, y, stringr::str_glue("a-", z), height = 4, width = 6)
   expect_equal(
     x$command$string,
     "expression(save_plot(y, \"a-b\", height = 4, width = 6))"
