@@ -145,7 +145,7 @@ tar_figure <- function(
     paste("target", name, "has no filename.")
   )
   filename <- targets::tar_tidy_eval(filename, envir, tidy_eval)
-  filename <- as.character(filename)
+  filename <- eval(filename)
   targets::tar_assert_chr(filename)
   targets::tar_assert_nzchar(filename)
 

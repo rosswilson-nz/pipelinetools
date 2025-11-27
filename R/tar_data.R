@@ -146,8 +146,8 @@ tar_data <- function(
     filename[[1]],
     paste("target", name_base, "has no filename.")
   )
-  filename <- targets::tar_tidy_eval(filename, envir, tidy_eval)
-  filename <- as.character(filename)
+  filename <- targets::tar_tidy_eval(filename, envir, TRUE)
+  filename <- eval(filename)
   targets::tar_assert_chr(filename)
   targets::tar_assert_nzchar(filename)
   filename <- fs::path("raw_data", filename)

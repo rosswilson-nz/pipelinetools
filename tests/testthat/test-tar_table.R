@@ -69,6 +69,14 @@ targets::tar_test("no filename", {
   )
 })
 
+targets::tar_test("filename expression", {
+  x <- tar_table(x, y, paste0("a", "-b"))
+  expect_equal(
+    x$command$string,
+    "expression(save_table(y, \"a-b\"))"
+  )
+})
+
 targets::tar_test("declaring a target does not run its command", {
   x <- tar_table(x, y, "a")
   path <- fs::path("output", "_tables", "x")

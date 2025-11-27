@@ -36,12 +36,6 @@ targets::tar_test("tidy eval works", {
   expect_equal(x[[1]]$command$string, "expression(\"raw_data/mydata.csv\")")
 })
 
-targets::tar_test("can disable tidy eval", {
-  y <- "mydata.csv"
-  x <- tar_data(mydata, !!y, read.csv, tidy_eval = FALSE)
-  expect_equal(x[[1]]$command$string, "expression(\"raw_data/!!y\")")
-})
-
 targets::tar_test("no name", {
   expect_error(
     tar_data(filename = "mydata.csv", fn = read.csv),
@@ -54,6 +48,11 @@ targets::tar_test("no filename", {
     tar_data(mydata, fn = read.csv),
     class = "tar_condition_validate"
   )
+})
+
+targets::tar_test("filename expression", {
+  x <- tar_data(mydata, paste0("mydata", "-1.csv"), read.csv)
+  expect_equal(x[[1]]$command$string, "expression(\"raw_data/mydata-1.csv\")")
 })
 
 targets::tar_test("no fn", {
