@@ -2,7 +2,10 @@ targets::tar_test("tar_data() works", {
   x <- tar_data(mydata, "mydata.csv", read.csv, skip = 1)
   expect_length(x, 2)
   expect_equal(x[[1]]$name, "file_mydata")
-  expect_equal(x[[1]]$command$string, "expression(\"raw_data/mydata.csv\")")
+  expect_equal(
+    x[[1]]$command$string,
+    "expression(fs::path(\"raw_data\", expression(\"mydata.csv\")))"
+  )
   expect_equal(x[[1]]$settings$description, character(0L))
   expect_equal(x[[2]]$name, "raw_mydata")
   expect_equal(
@@ -43,9 +46,11 @@ targets::tar_test("no filename", {
 })
 
 targets::tar_test("filename expression", {
-  name <- "1"
   x <- tar_data(mydata, stringr::str_glue("mydata-{name}.csv"), read.csv)
-  expect_equal(x[[1]]$command$string, "expression(\"raw_data/mydata-1.csv\")")
+  expect_equal(
+    x[[1]]$command$string,
+    "expression(fs::path(\"raw_data\", expression(stringr::str_glue(\"mydata-{name}.csv\"))))"
+  )
 })
 
 targets::tar_test("no fn", {

@@ -138,10 +138,12 @@ tar_table <- function(
   targets::tar_assert_lgl(tidy_eval)
   name <- stringr::str_glue("tbl_{name}")
 
-  targets::tar_assert_nonmissing(filename)
-  filename <- eval(filename)
-  targets::tar_assert_chr(filename)
-  targets::tar_assert_nzchar(filename)
+  filename <- as.expression(substitute(filename))
+  targets::tar_assert_nonmissing(
+    filename[[1]],
+    stringr::str_glue("target {name} has no command.")
+  )
+  filename <- targets::tar_tidy_eval(filename, envir, TRUE)
 
   command <- as.expression(substitute(command))
   targets::tar_assert_nonmissing(

@@ -63,10 +63,10 @@ targets::tar_test("no filename", {
 
 targets::tar_test("filename expression", {
   name <- "b"
-  x <- tar_table(x, y, stringr::str_glue("a-", name))
+  x <- tar_table(x, y, stringr::str_glue("a-{name}"))
   expect_equal(
     x$command$string,
-    "expression(save_table(y, \"a-b\"))"
+    "expression(save_table(y, stringr::str_glue(\"a-{name}\")))"
   )
 })
 

@@ -142,11 +142,16 @@ tar_data <- function(
 
   targets::tar_assert_lgl(tidy_eval)
 
-  targets::tar_assert_nonmissing(filename)
-  filename <- eval(filename)
-  targets::tar_assert_chr(filename)
-  targets::tar_assert_nzchar(filename)
-  filename <- fs::path("raw_data", filename)
+  filename <- as.expression(substitute(filename))
+  targets::tar_assert_nonmissing(
+    filename[[1]],
+    stringr::str_glue("target {name_base} has no command.")
+  )
+  filename <- targets::tar_tidy_eval(
+    substitute(fs::path("raw_data", filename)),
+    envir,
+    TRUE
+  )
 
   pattern <- as.expression(substitute(pattern))
   pattern <- targets::tar_tidy_eval(pattern, envir, tidy_eval)
