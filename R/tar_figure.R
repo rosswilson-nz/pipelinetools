@@ -140,13 +140,8 @@ tar_figure <- function(
   targets::tar_assert_lgl(tidy_eval)
   name <- stringr::str_glue("fig_{name}")
 
-  filename <- as.expression(substitute(filename))
-  targets::tar_assert_nonmissing(
-    filename[[1]],
-    stringr::str_glue("target {name} has no filename.")
-  )
-  filename <- targets::tar_tidy_eval(filename, envir, tidy_eval)
-  filename <- eval(filename)
+  targets::tar_assert_nonmissing(filename)
+  filename <- targets::tar_deparse_language(filename)
   targets::tar_assert_chr(filename)
   targets::tar_assert_nzchar(filename)
 

@@ -142,13 +142,8 @@ tar_data <- function(
 
   targets::tar_assert_lgl(tidy_eval)
 
-  filename <- as.expression(substitute(filename))
-  targets::tar_assert_nonmissing(
-    filename[[1]],
-    stringr::str_glue("target {name_base} has no filename.")
-  )
-  filename <- targets::tar_tidy_eval(filename, envir, TRUE)
-  filename <- eval(filename)
+  targets::tar_assert_nonmissing(filename)
+  filename <- targets::tar_deparse_language(filename)
   targets::tar_assert_chr(filename)
   targets::tar_assert_nzchar(filename)
   filename <- fs::path("raw_data", filename)

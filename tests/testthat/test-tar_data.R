@@ -28,14 +28,6 @@ targets::tar_test("tar_data() sets deployment = 'main' by default", {
   )
 })
 
-targets::tar_test("tidy eval works", {
-  envir <- environment()
-  targets::tar_option_set(envir = envir)
-  envir$y <- "mydata.csv"
-  x <- tar_data(mydata, !!y, read.csv)
-  expect_equal(x[[1]]$command$string, "expression(\"raw_data/mydata.csv\")")
-})
-
 targets::tar_test("no name", {
   expect_error(
     tar_data(filename = "mydata.csv", fn = read.csv),
