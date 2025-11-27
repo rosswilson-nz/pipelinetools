@@ -139,7 +139,7 @@ tar_table <- function(
   name <- stringr::str_glue("tbl_{name}")
 
   targets::tar_assert_nonmissing(filename)
-  filename <- targets::tar_deparse_language(filename)
+  filename <- eval(filename)
   targets::tar_assert_chr(filename)
   targets::tar_assert_nzchar(filename)
 

@@ -143,7 +143,7 @@ tar_data <- function(
   targets::tar_assert_lgl(tidy_eval)
 
   targets::tar_assert_nonmissing(filename)
-  filename <- targets::tar_deparse_language(filename)
+  filename <- eval(filename)
   targets::tar_assert_chr(filename)
   targets::tar_assert_nzchar(filename)
   filename <- fs::path("raw_data", filename)
