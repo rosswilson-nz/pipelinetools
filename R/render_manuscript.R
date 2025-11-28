@@ -71,7 +71,12 @@ render_manuscript <- function(
   output_path <- fs::path_ext_set(newpath, "pdf")
 
   # Compile using Typst
-  stderr <- system2("typst", c("compile", shQuote(newpath)), stderr = TRUE)
+  stderr <- system2(
+    "typst",
+    c("compile", shQuote(newpath)),
+    stderr = TRUE,
+    stdout = TRUE
+  )
 
   # Remove temporary files in output directory
   fs::file_delete(c(
