@@ -4,7 +4,18 @@
 #' @param path JSON file to write `x` to
 #' @param auto_unbox,... Passed to `jsonlite::write_json()`
 #' @export
-export_json <- function(x, path = "output/values.json", auto_unbox = TRUE, ...) {
+export_json <- function(
+  x,
+  path = "output/values.json",
+  auto_unbox = TRUE,
+  ...
+) {
   jsonlite::write_json(x, path, auto_unbox = auto_unbox, ...)
   path
+}
+
+write_to_json <- function(x, filename, ...) {
+  if (length(x)) {
+    export_json(x, fs::path("output", filename, ext = "json"), ...)
+  }
 }
