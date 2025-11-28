@@ -59,6 +59,7 @@ render_manuscript <- function(
     deps,
     \(d) {
       if (fs::path_has_parent(d, "reports")) {
+        path <- c(path, d)
         new_d <- fs::path("output", fs::path_rel(d, "reports"))
         newdeps <<- c(newdeps, new_d)
         fs::dir_create(fs::path_dir(new_d))
