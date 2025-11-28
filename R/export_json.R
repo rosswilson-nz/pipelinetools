@@ -14,6 +14,11 @@ export_json <- function(
   path
 }
 
+#' Write outputs to JSON file for Typst import
+#'
+#' @param x List of R objects
+#' @param path JSON filename stub
+#' @export
 write_to_json <- function(x, filename, ...) {
   if (length(x)) {
     export_json(x, fs::path("output", filename, ext = "json"), ...)
