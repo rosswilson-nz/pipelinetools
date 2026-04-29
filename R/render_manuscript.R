@@ -15,8 +15,8 @@ render_manuscript <- function(
   deps = list(),
   fig = list(),
   tbl = list(),
-  template = "reports/_templates/article.typ",
-  bibliography = "reports/references.yaml"
+  template = "output/_templates/article.typ",
+  bibliography = "output/references.yaml"
 ) {
   if (length(fig)) {
     # Extract preferred image format
@@ -42,53 +42,16 @@ render_manuscript <- function(
     tbl_json <- character(0)
   }
 
-  # Temporarily copy Typst source to output directory
-  newpath <- fs::path("output", fs::path_rel(path, "reports"))
-  fs::file_copy(path, newpath, overwrite = TRUE)
-
-  newtemplate <- fs::path("output", fs::path_rel(template, "reports"))
-  fs::dir_create(fs::path_dir(newtemplate))
-  fs::file_copy(template, newtemplate, overwrite = TRUE)
-
-  newbibliography <- fs::path("output", fs::path_rel(bibliography, "reports"))
-  fs::file_copy(bibliography, newbibliography, overwrite = TRUE)
-
-  deps <- unlist(deps)
-  newdeps <- character()
-  purrr::walk(
-    deps,
-    \(d) {
-      if (fs::path_has_parent(d, "reports")) {
-        path <<- c(path, d)
-        new_d <- fs::path("output", fs::path_rel(d, "reports"))
-        newdeps <<- c(newdeps, new_d)
-        fs::dir_create(fs::path_dir(new_d))
-        fs::file_copy(d, new_d, overwrite = TRUE)
-      }
-    }
-  )
-
-  # Output file is the temporary Typst source, with .pdf extension
-  output_path <- fs::path_ext_set(newpath, "pdf")
+  # Output file is the same as the Typst source, with .pdf extension instead of .typ
+  output_path <- fs::path_ext_set(path, "pdf")
 
   # Compile using Typst
   stderr <- system2(
     "typst",
-    c("compile", shQuote(newpath)),
+    c("compile", shQuote(path)),
     stderr = TRUE,
     stdout = TRUE
   )
-
-  # Remove temporary files in output directory
-  fs::file_delete(c(
-    newpath,
-    newtemplate,
-    newdeps,
-    newbibliography,
-    fig_json,
-    tbl_json
-  ))
-  fs::dir_delete(fs::path_dir(newtemplate))
 
   # Pass on any errors or warnings from the Typst compiler
   if (

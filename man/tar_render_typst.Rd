@@ -11,7 +11,7 @@ tar_render_typst(
   figs = list(),
   tbls = list(),
   appendix = character(),
-  bibliography = "references.yaml",
+  bibliography = "references.bib",
   template = "article",
   appendix_template = "appendix",
   tidy_eval = targets::tar_option_get("tidy_eval"),

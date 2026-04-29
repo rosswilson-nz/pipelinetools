@@ -115,7 +115,7 @@ tar_render_typst <- function(
   figs = list(),
   tbls = list(),
   appendix = character(),
-  bibliography = "references.yaml",
+  bibliography = "references.bib",
   template = "article",
   appendix_template = "appendix",
   tidy_eval = targets::tar_option_get("tidy_eval"),
@@ -141,12 +141,12 @@ tar_render_typst <- function(
   targets::tar_assert_lgl(tidy_eval)
 
   filename <- targets::tar_tidy_eval(
-    substitute(fs::path("reports", filename, ext = "typ")),
+    substitute(fs::path("output", filename, ext = "typ")),
     envir,
     TRUE
   )
   bibliography <- targets::tar_tidy_eval(
-    substitute(fs::path("reports", bibliography)),
+    substitute(fs::path("output", bibliography)),
     envir,
     TRUE
   )
@@ -156,18 +156,18 @@ tar_render_typst <- function(
     TRUE
   )
   appendix <- targets::tar_tidy_eval(
-    substitute(fs::path("reports", appendix, ext = "typ")),
+    substitute(fs::path("output", appendix, ext = "typ")),
     envir,
     TRUE
   )
   template <- targets::tar_tidy_eval(
-    substitute(fs::path("reports", "_templates", template, ext = "typ")),
+    substitute(fs::path("output", "_templates", template, ext = "typ")),
     envir,
     TRUE
   )
   appendix_template <- targets::tar_tidy_eval(
     substitute(fs::path(
-      "reports",
+      "output",
       "_templates",
       appendix_template,
       ext = "typ"

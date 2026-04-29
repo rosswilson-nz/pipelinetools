@@ -1,3 +1,7 @@
+# pipelinetools v1.2
+
+* `tar_render_typst()` now expects source files in `output/` instead of `reports/`
+
 # pipelinetools v1.1.0
 
 * Add `tar_figure()`, `tar_table()`, `tar_data()`, and `tar_render_typst()` target factories
