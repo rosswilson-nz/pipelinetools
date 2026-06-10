@@ -19,7 +19,7 @@
 #' @param create_dir Whether to create the output directory if it doesn't exist.
 #'
 #' @export
-save_plot <- function(
+save_tinyplot <- function(
   fn,
   filename,
   device = NULL,
